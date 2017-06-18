@@ -1,0 +1,18 @@
+Meter los archivos en la carpeta byson el l(sintactico) y el .y(lexico)
+
+en CMD el comando es---)  bison -d -oanalexico.c lexico.y
+-analexico.c nombre del archivo para c
+lexico.y nombre del archivo con el lenguaje
+
+se crean dos la cabecera que contiene los punteros , y el .c
+
+para el sintactico
+lo de arriba x2
+el comando es __) flex -oasintactico.c expresionesregulares.l
+
+se meten los dos a un nuevo proyecto en c , preferiblemente en el compilador dev
+
+lo demas ya lo se , namas era para los comandos :v
+
+
+
