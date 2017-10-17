@@ -12,13 +12,15 @@ public class Vista extends JFrame {
     JButton nuevo, abrir, guardar, salir, compilar, light; //Botones
     public JTextArea input, numeros;
     public ImageIcon im2, im1;
-    JLabel icono;
-    JPanel iconPane;
-    TextoColor output,output2;
+    //JLabel icono;
+    //JPanel iconPane;
+    TextoColor output,output2,output3;
     JSplitPane principal, sp,sl;
 	JPanel central ;
 	String errores;
-	int numErr;
+        String erroresS="";
+        int numErrS=0;
+	int numErr=0;
     
     
     public Vista() {
@@ -158,9 +160,9 @@ public class Vista extends JFrame {
 
 		
         //Panel del icono
-        im1 = new ImageIcon(getClass().getResource("/iconos/R1.png")); //Icono encendido
-        im2 = new ImageIcon(getClass().getResource("/iconos/R2.png")); //Icono apagado
-        iconPane = new JPanel();
+        //im1 = new ImageIcon(getClass().getResource("/iconos/R1.png")); //Icono encendido
+        //im2 = new ImageIcon(getClass().getResource("/iconos/R2.png")); //Icono apagado
+        /*iconPane = new JPanel();
         iconPane.setBackground(Color.white);
         icono = new JLabel();
         icono.setIcon(im1);
@@ -169,9 +171,15 @@ public class Vista extends JFrame {
         JPanel border = new JPanel(new BorderLayout());
         border.add(icono, BorderLayout.CENTER);
         iconPane.add(border);
-        iconPane.setBorder(null);
-        sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll1, iconPane); 
-        sp.setBorder(null);iconPane.add(icono, BorderLayout.CENTER);
+        iconPane.setBorder(null);*/
+        
+        //Panel de salida semantica
+         output3 = new TextoColor();
+        JScrollPane out3 = new JScrollPane(output3);
+        out3.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        
+        sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll1, out3); 
+       // sp.setBorder(null);iconPane.add(icono, BorderLayout.CENTER);
        // sp.setDividerSize(0);Esto no sirve por que ya lo tiene el principal
 
         //PANEL SALIDA lexico
@@ -182,7 +190,7 @@ public class Vista extends JFrame {
         output2 = new TextoColor();
          JScrollPane out2 = new JScrollPane(output2);
         out.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        //agrego los dos a unos solo uwu
+        //agrego los dos a uno solo uwu
         sl = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, out, out2); 
         
         ///CREACION DEL SPLIT
@@ -214,6 +222,7 @@ public class Vista extends JFrame {
         
         colorearSplit(principal, Color.WHITE);
         colorearSplit(sp, Color.white);
+        colorearSplit(sl, Color.white);
        
         
         this.setTitle("<Nuevo> - R");
@@ -222,8 +231,8 @@ public class Vista extends JFrame {
         this.add(barra, BorderLayout.NORTH);
         this.add(centro, BorderLayout.CENTER);
         this.setVisible(true);
-         principal.setDividerLocation(0.7);
-        sp.setDividerLocation(0.9);
+         principal.setDividerLocation(0.6);
+        sp.setDividerLocation(0.5);
         sl.setDividerLocation(0.5);
         this.setLocationRelativeTo(null);
         //welcome w= new welcome(this, true);

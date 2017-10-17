@@ -33,6 +33,7 @@ public class OyenteBotones implements ActionListener {
                 System.out.println("GUARDADO " + modelo.guardado);
                 modelo.abrir(vista);
                 modelo.actualizarBloqueo(vista);
+                
                 break;
 
             case "guardar":
@@ -94,22 +95,32 @@ public class OyenteBotones implements ActionListener {
 public void compilarArchivo(Vista v)
 {
 vista.output.setText("");
+vista.output2.setText("");
+vista.output3.setText("");
+vista.numErr=0;
+vista.numErrS=0;
+vista.errores="";
+vista.erroresS="";
+VerificacionToken.vaciar();
             System.out.println("Si compila");
 
             //ANALISIS LÉXICO
             try {
-                vista.output.appendBlue(">>ANALISIS L\u00c9XICO INICIADO...");
-               vista.output.appendYellow("\n\tValor\t\t\tTipo");
-               vista.output.appendYellow("\n=============================================================\n");
+                vista.output3.appendBlue(">>ANALISIS L\u00c9XICO INICIADO...");
+               vista.output3.appendYellow("\n\tValor\t\t\tTipo");
+               vista.output3.appendYellow("\n=============================================================\n");
 
                 Compilador compLex;
                 Compilador compSint;
+                Compilador compS;
                 try {
                     compLex = new Compilador(new java.io.FileInputStream(modelo.nombre));
                     compLex.analisisLexico(vista, compLex);
                     
                     compSint = new Compilador(new java.io.FileInputStream(modelo.nombre));
                     compSint.analisisSintactico(vista, compSint);
+                    compS = new Compilador(new java.io.FileInputStream(modelo.nombre));
+                    compS.analisisSemantico(vista, compS);
                 } catch (java.io.FileNotFoundException e) {
                     System.out.println("Error de archivo");
                 }

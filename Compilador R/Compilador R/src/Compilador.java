@@ -28,17 +28,17 @@ public class Compilador implements CompiladorConstants {
   public void analisisLexico(Vista v, Compilador comp)  throws ParseException
   {
                                 //Análisis Léxico	
-                                v.output.appendBlue("*****INICIANDO AN\u00c1LISIS L\u00c9XICO*****\u005cn\u005ct");
+                                v.output3.appendBlue("*****INICIANDO AN\u00c1LISIS L\u00c9XICO*****\u005cn\u005ct");
                                 try
                                         {comp.input(comp, v);}
                                         catch(ParseException e)
                                         {
-                                         v.output.appendRed("Error sint\u00e1ctico: "+e.getMessage());
+                                         v.output3.appendRed("Error sint\u00e1ctico: "+e.getMessage());
 
                                         }
                                         catch(TokenMgrError e)
                                         {
-                                          v.output.appendRed("Error: Caracter no v\u00e1lido: "+e.getMessage());
+                                          v.output3.appendRed("Error: Caracter no v\u00e1lido: "+e.getMessage());
 
                                         }
         }
@@ -46,10 +46,9 @@ public class Compilador implements CompiladorConstants {
         public void analisisSintactico(Vista v, Compilador comp)throws ParseException
         {
         //Análisis Síntáctico	
-                                v.output2.appendBlue("\u005cn\u005ct*****INICIANDO AN\u00c1LISIS SINT\u00c1CTICO*****\u005cn\u005ct");
+                                v.output.appendBlue("\u005cn\u005ct*****INICIANDO AN\u00c1LISIS SINT\u00c1CTICO*****\u005cn\u005ct");
                                 v.numErr=0;
                                 v.errores="";
-
                                 try
                                         {
                                         v.errores="";
@@ -57,13 +56,12 @@ public class Compilador implements CompiladorConstants {
 
                                         if(v.numErr==0)
                                         {
-                                        v.output2.appendGreen("\u005cn\u005crCompilaci\u00f3n Terminada con \u00c9xito");
-                                        JOptionPane.showMessageDialog(v, "Compilaci\u00f3n exitosa", "No encontramos ning\u00fan problema" , JOptionPane.INFORMATION_MESSAGE);
+                                        v.output.appendGreen("\u005cn\u005crCompilaci\u00f3n Terminada con \u00c9xito");
                                         }
                                         else
                                         {
-                                        v.output2.appendRed("\u005cn\u005crCompilaci\u00c3\u00b3n Terminada con"+v.numErr+" errores:\u005cn\u005cr");
-                                        v.output2.appendRed(v.errores);
+                                        v.output.appendRed("\u005cn\u005crCompilaci\u00f3n Terminada con "+v.numErr+" errores:\u005cn\u005cr");
+                                        v.output.appendRed(v.errores);
                                         }
 
 
@@ -71,12 +69,38 @@ public class Compilador implements CompiladorConstants {
                                         }
                                         catch(ParseException e)
                                         {
-                                         v.output2.append("Error sint\u00e1ctico: "+e.getMessage());
+                                         v.output.appendRed("Error sint\u00e1ctico: "+e.getMessage());
                                         }
                                         catch(TokenMgrError e)
                                         {
-                                          v.output2.append("Error: Caracter no v\u00e1lido: "+e.getMessage());
+                                          v.output.appendRed("Error: Caracter no v\u00e1lido: "+e.getMessage());
                                         }
+
+        }
+public void analisisSemantico(Vista v, Compilador comp)throws ParseException
+        {
+        //Análisis Semantico	
+
+                                 v.output2.appendBlue("\u005cn\u005ct*****INICIANDO AN\u00c1LISIS SEM\u00c1NTICO*****\u005cn\u005ct");
+
+                                           if(v.numErrS==0){
+                                             v.output2.appendGreen("\u005crCompilaci\u00f3n Terminada con \u00c9xito\u005cn");
+                                           v.output2.appendBlue("Variables declaradas "+VerificacionToken.mostrar()+"\u005cn");
+                                        JOptionPane.showMessageDialog(v, "Compilaci\u00f3n exitosa", "No encontramos ning\u00fan problema" , JOptionPane.INFORMATION_MESSAGE);
+
+                                        }
+                                        else
+                                        {
+                                      v.output2.appendRed("\u005cn\u005crCompilaci\u00f3n Terminada con "+v.numErrS+" errores:\u005cn\u005cr");
+                                        v.output2.appendBlue("Variables declaradas "+VerificacionToken.mostrar()+"\u005cn");
+                                          v.output2.appendRed(v.erroresS);
+                                        }
+
+
+                                        System.out.println("ANALISIS SEMANTICO FINALIZADO");
+
+
+
         }
 
 
@@ -97,7 +121,7 @@ public class Compilador implements CompiladorConstants {
     while (true) {
       mensaje = revisarTokens();
 //analiza.archtoken_escribe(mensaje);
-       v.output.append(mensaje+"\u005cn");
+       v.output3.append(mensaje+"\u005cn");
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case si:
       case sino:
@@ -708,58 +732,51 @@ v.numErr++;
 //DECLARACIONES
   final public 
 void declaraciones(Vista v) throws ParseException {System.out.println("Declaro");
+Token img;
     try {
-      jj_consume_token(ident);
+      //declara()
+                       img = jj_consume_token(ident);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case asignacion:
+      case asignacion:{
+        jj_consume_token(asignacion);
+        break;
+        }
       case asignaciondos:{
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case asignacion:{
-          jj_consume_token(asignacion);
-          break;
-          }
-        case asignaciondos:{
-          jj_consume_token(asignaciondos);
-          break;
-          }
-        default:
-          jj_la1[7] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case abreparentesis:
-        case resta:
-        case num:
-        case flotante:
-        case booleano:
-        case nulo:
-        case cadena:
-        case ident:{
-          operacion(v);
-          break;
-          }
-        case abrecorchete:{
-          arreglo();
-          break;
-          }
-        default:
-          jj_la1[8] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
+        jj_consume_token(asignaciondos);
         break;
         }
       default:
-        jj_la1[9] = jj_gen;
-        ;
+        jj_la1[7] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case abreparentesis:
+      case resta:
+      case num:
+      case flotante:
+      case booleano:
+      case nulo:
+      case cadena:
+      case ident:{
+        operacion(v);
+        break;
+        }
+      case abrecorchete:{
+        arreglo();
+        break;
+        }
+      default:
+        jj_la1[8] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
       jj_consume_token(puntocoma);
+VerificacionToken.InsertarDeclaracion(img.image,img.kind);
     } catch (ParseException e) {
 v.numErr++;
                 v.errores=v.errores+"Error sint\u00e1ctico: Error al declarar variable\u005cn\u005cr"+e.getMessage();
                 Token t;
-
                 do
                 {t=getNextToken();
                 }while(t.kind != EOF  && t.kind!=puntocoma &&t.kind!=asignaciondos &&t.kind!=asignacion  );
@@ -804,7 +821,7 @@ void dato() throws ParseException {
       break;
       }
     default:
-      jj_la1[10] = jj_gen;
+      jj_la1[9] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -826,7 +843,7 @@ void dato() throws ParseException {
       break;
       }
     default:
-      jj_la1[11] = jj_gen;
+      jj_la1[10] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -848,7 +865,7 @@ void dato() throws ParseException {
         break;
         }
       default:
-        jj_la1[12] = jj_gen;
+        jj_la1[11] = jj_gen;
         break label_6;
       }
       operador();
@@ -887,13 +904,13 @@ void dato() throws ParseException {
       break;
       }
     default:
-      jj_la1[13] = jj_gen;
+      jj_la1[12] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
   }
 
-  final public void operando(Vista v) throws ParseException {
+  final public void operando(Vista v) throws ParseException {Token img;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case resta:
     case num:
@@ -904,7 +921,11 @@ void dato() throws ParseException {
     case ident:{
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case ident:{
-        jj_consume_token(ident);
+        img = jj_consume_token(ident);
+if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\u005cn";
+          v.numErrS+=1;
+            }
         break;
         }
       case resta:
@@ -917,7 +938,7 @@ void dato() throws ParseException {
         break;
         }
       default:
-        jj_la1[14] = jj_gen;
+        jj_la1[13] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -930,7 +951,7 @@ void dato() throws ParseException {
       break;
       }
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[14] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -957,7 +978,7 @@ void dato() throws ParseException {
             break;
             }
           default:
-            jj_la1[16] = jj_gen;
+            jj_la1[15] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
@@ -975,7 +996,7 @@ void dato() throws ParseException {
             break;
             }
           default:
-            jj_la1[17] = jj_gen;
+            jj_la1[16] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
@@ -983,14 +1004,14 @@ void dato() throws ParseException {
           break;
           }
         default:
-          jj_la1[18] = jj_gen;
+          jj_la1[17] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
         break;
         }
       default:
-        jj_la1[19] = jj_gen;
+        jj_la1[18] = jj_gen;
         ;
       }
       jj_consume_token(puntocoma);
@@ -1013,13 +1034,17 @@ v.numErr++;
     printwrite(v);
   }
 
-  final public void printwrite(Vista v) throws ParseException {
+  final public void printwrite(Vista v) throws ParseException {Token img;
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case mode:{
         jj_consume_token(mode);
         jj_consume_token(abreparentesis);
-        jj_consume_token(ident);
+        img = jj_consume_token(ident);
+if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\u005cn";
+          v.numErrS+=1;
+            }
         jj_consume_token(cierraparentesis);
         jj_consume_token(puntocoma);
         break;
@@ -1186,7 +1211,7 @@ v.numErr++;
           break;
           }
         default:
-          jj_la1[20] = jj_gen;
+          jj_la1[19] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -1342,7 +1367,7 @@ v.numErr++;
           break;
           }
         default:
-          jj_la1[21] = jj_gen;
+          jj_la1[20] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -1369,7 +1394,7 @@ v.numErr++;
           break;
           }
         default:
-          jj_la1[22] = jj_gen;
+          jj_la1[21] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -1380,14 +1405,19 @@ v.numErr++;
       case rm:{
         jj_consume_token(rm);
         jj_consume_token(abreparentesis);
-        jj_consume_token(ident);
+        img = jj_consume_token(ident);
+if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\u005cn";
+          v.numErrS+=1;
+            }
         jj_consume_token(cierraparentesis);
         jj_consume_token(puntocoma);
         break;
         }
       case function:{
         jj_consume_token(function);
-        jj_consume_token(ident);
+        img = jj_consume_token(ident);
+VerificacionToken.InsertarDeclaracion(img.image,img.kind);
         jj_consume_token(abreparentesis);
         label_7:
         while (true) {
@@ -1397,10 +1427,11 @@ v.numErr++;
             break;
             }
           default:
-            jj_la1[23] = jj_gen;
+            jj_la1[22] = jj_gen;
             break label_7;
           }
-          jj_consume_token(ident);
+          img = jj_consume_token(ident);
+VerificacionToken.InsertarDeclaracion(img.image,img.kind);
           label_8:
           while (true) {
             switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -1409,11 +1440,12 @@ v.numErr++;
               break;
               }
             default:
-              jj_la1[24] = jj_gen;
+              jj_la1[23] = jj_gen;
               break label_8;
             }
             jj_consume_token(coma);
-            jj_consume_token(ident);
+            img = jj_consume_token(ident);
+VerificacionToken.InsertarDeclaracion(img.image,img.kind);
           }
         }
         jj_consume_token(cierraparentesis);
@@ -1423,7 +1455,7 @@ v.numErr++;
         break;
         }
       default:
-        jj_la1[25] = jj_gen;
+        jj_la1[24] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1434,7 +1466,7 @@ v.numErr++;
 
                 do
                 {t=getNextToken();
-                }while(t.kind != EOF && t.kind!=puntocoma);
+                }while(t.kind != EOF && t.kind!=puntocoma&&t.kind!=ident);
     }
   }
 
@@ -1447,60 +1479,12 @@ v.numErr++;
 		|<menorigual>|<mayorigual>|<igual>|<diferente>|<asignacion>|<asignaciondos>
 		|<aumento>|<decremento>|<gatito>)
 }*/
-  final public 
-void concatenar() throws ParseException {
-    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case resta:
-    case num:
-    case flotante:
-    case booleano:
-    case nulo:
-    case cadena:{
-      dato();
-      break;
-      }
-    case ident:{
-      jj_consume_token(ident);
-      break;
-      }
-    default:
-      jj_la1[26] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    label_9:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case suma:{
-        ;
-        break;
-        }
-      default:
-        jj_la1[27] = jj_gen;
-        break label_9;
-      }
-      jj_consume_token(suma);
-      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case resta:
-      case num:
-      case flotante:
-      case booleano:
-      case nulo:
-      case cadena:{
-        dato();
-        break;
-        }
-      case ident:{
-        jj_consume_token(ident);
-        break;
-        }
-      default:
-        jj_la1[28] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-    }
-  }
+
+/*void concatenar():
+{}
+{
+	(dato()|<ident>) (<suma> (dato()|<ident>))*
+}*/
 
 /*void scan(Vista v):
 {}
@@ -1512,7 +1496,7 @@ void concatenar() throws ParseException {
 		catch(ParseException e)
 		{
 		v.numErr++;
-		v.errores=v.errores+"Error sint�ctico: Error en instrucci�n de entrada\n\r" +e.getMessage();
+		v.errores=v.errores+"Error sintáctico: Error en instrucción de entrada\n\r" +e.getMessage();
 		Token t;	
 		
 		do
@@ -1542,7 +1526,7 @@ void condicionales(Vista v) throws ParseException {
       break;
       }
     default:
-      jj_la1[29] = jj_gen;
+      jj_la1[25] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1566,7 +1550,7 @@ void condicionales(Vista v) throws ParseException {
         break;
         }
       default:
-        jj_la1[30] = jj_gen;
+        jj_la1[26] = jj_gen;
         ;
       }
     } catch (ParseException e) {
@@ -1582,7 +1566,7 @@ v.numErr++;
   }
 
   final public void casos(Vista v) throws ParseException {
-    label_10:
+    label_9:
     while (true) {
       jj_consume_token(caso);
       dato();
@@ -1595,8 +1579,8 @@ v.numErr++;
         break;
         }
       default:
-        jj_la1[31] = jj_gen;
-        break label_10;
+        jj_la1[27] = jj_gen;
+        break label_9;
       }
     }
     defaultt(v);
@@ -1610,13 +1594,13 @@ v.numErr++;
       break;
       }
     default:
-      jj_la1[32] = jj_gen;
+      jj_la1[28] = jj_gen;
       ;
     }
   }
 
   final public void defaultt(Vista v) throws ParseException {
-    label_11:
+    label_10:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case falta:{
@@ -1624,8 +1608,8 @@ v.numErr++;
         break;
         }
       default:
-        jj_la1[33] = jj_gen;
-        break label_11;
+        jj_la1[29] = jj_gen;
+        break label_10;
       }
       jj_consume_token(falta);
       jj_consume_token(dospuntos);
@@ -1634,14 +1618,18 @@ v.numErr++;
     }
   }
 
-  final public void switchh(Vista v) throws ParseException {
+  final public void switchh(Vista v) throws ParseException {Token img;
     try {
       jj_consume_token(elegir);
       jj_consume_token(abreparentesis);
-      jj_consume_token(ident);
+      img = jj_consume_token(ident);
+if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\u005cn";
+          v.numErrS+=1;
+            }
       jj_consume_token(cierraparentesis);
       jj_consume_token(abrellave);
-      label_12:
+      label_11:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case caso:{
@@ -1649,8 +1637,8 @@ v.numErr++;
           break;
           }
         default:
-          jj_la1[34] = jj_gen;
-          break label_12;
+          jj_la1[30] = jj_gen;
+          break label_11;
         }
         casos(v);
       }
@@ -1671,7 +1659,7 @@ v.numErr++;
   final public 
 void condicion(Vista v) throws ParseException {
     condicional(v);
-    label_13:
+    label_12:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case y:
@@ -1680,8 +1668,8 @@ void condicion(Vista v) throws ParseException {
         break;
         }
       default:
-        jj_la1[35] = jj_gen;
-        break label_13;
+        jj_la1[31] = jj_gen;
+        break label_12;
       }
       operadorlogico();
       condicional(v);
@@ -1699,7 +1687,7 @@ void condicion(Vista v) throws ParseException {
       break;
       }
     default:
-      jj_la1[36] = jj_gen;
+      jj_la1[32] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1742,7 +1730,7 @@ void condicion(Vista v) throws ParseException {
       break;
       }
     default:
-      jj_la1[37] = jj_gen;
+      jj_la1[33] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1764,7 +1752,7 @@ void condicion(Vista v) throws ParseException {
       break;
       }
     default:
-      jj_la1[38] = jj_gen;
+      jj_la1[34] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1792,22 +1780,38 @@ v.numErr++;
   }
 
   final public void dowhile(Vista v) throws ParseException {
-    jj_consume_token(hacer);
-    jj_consume_token(abrellave);
-    instrucciones(v);
-    jj_consume_token(cierrallave);
-    jj_consume_token(mientras);
-    jj_consume_token(abreparentesis);
-    condicion(v);
-    jj_consume_token(cierraparentesis);
-    jj_consume_token(puntocoma);
+    try {
+      jj_consume_token(hacer);
+      jj_consume_token(abrellave);
+      instrucciones(v);
+      jj_consume_token(cierrallave);
+      jj_consume_token(mientras);
+      jj_consume_token(abreparentesis);
+      condicion(v);
+      jj_consume_token(cierraparentesis);
+      jj_consume_token(puntocoma);
+    } catch (ParseException e) {
+v.numErr++;
+                v.errores=v.errores+"Error sint\u00e1ctico: Error en ciclo do while \u005cn\u005cr" +e.getMessage();
+                Token t;
+
+                do
+                {t=getNextToken();
+
+                }while(t.kind != EOF && t.kind!=cierrallave && t.kind!=abrellave && t.kind!=cierraparentesis && t.kind!=abreparentesis
+                 &&t.kind!=hacer);
+    }
   }
 
-  final public void ffor(Vista v) throws ParseException {
+  final public void ffor(Vista v) throws ParseException {Token img;
     try {
       jj_consume_token(hasta);
       jj_consume_token(abreparentesis);
-      jj_consume_token(ident);
+      img = jj_consume_token(ident);
+if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\u005cn";
+          v.numErrS+=1;
+            }
       jj_consume_token(in);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case num:{
@@ -1815,11 +1819,15 @@ v.numErr++;
         break;
         }
       case ident:{
-        jj_consume_token(ident);
+        img = jj_consume_token(ident);
+if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\u005cn";
+          v.numErrS+=1;
+            }
         break;
         }
       default:
-        jj_la1[39] = jj_gen;
+        jj_la1[35] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1830,11 +1838,15 @@ v.numErr++;
         break;
         }
       case ident:{
-        jj_consume_token(ident);
+        img = jj_consume_token(ident);
+if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\u005cn";
+          v.numErrS+=1;
+            }
         break;
         }
       default:
-        jj_la1[40] = jj_gen;
+        jj_la1[36] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1864,7 +1876,7 @@ v.numErr++;
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[41];
+  final private int[] jj_la1 = new int[37];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -1874,13 +1886,13 @@ v.numErr++;
       jj_la1_init_2();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0xffffffe0,0xffffffe0,0x0,0x0,0x7ff00a0,0x7ff00a0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3f70fe0,0x3f70fe0,0x0,0x0,0x0,0xff0000,0x0,0x0,0x0,0xa0,0x40,0x100,0x200,0x400,0x100,0x0,0x0,0x0,0x7000000,0x0,0x0,};
+      jj_la1_0 = new int[] {0xffffffe0,0xffffffe0,0x0,0x0,0x7ff00a0,0x7ff00a0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3f70fe0,0x3f70fe0,0x0,0x0,0x0,0xff0000,0xa0,0x40,0x100,0x200,0x400,0x100,0x0,0x0,0x0,0x7000000,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0xffffffff,0xffffffff,0x0,0x0,0x0,0x0,0x100000,0x0,0x804400,0x0,0x800000,0x0,0x1fc00000,0x1fc00000,0x800000,0x800400,0x0,0x0,0x0,0x0,0xffc20000,0xffc20000,0x800400,0x0,0x100000,0x0,0x800000,0x400000,0x800000,0x0,0x0,0x0,0x0,0x0,0x0,0x60000000,0x60000000,0x80000000,0x0,0x0,0x0,};
+      jj_la1_1 = new int[] {0xffffffff,0xffffffff,0x0,0x0,0x0,0x0,0x100000,0x0,0x804400,0x800000,0x0,0x1fc00000,0x1fc00000,0x800000,0x800400,0x0,0x0,0x0,0x0,0xffc20000,0xffc20000,0x800400,0x0,0x100000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x60000000,0x60000000,0x80000000,0x0,0x0,0x0,};
    }
    private static void jj_la1_init_2() {
-      jj_la1_2 = new int[] {0x71fff,0x71fff,0x20000,0x20000,0x60000,0x60000,0x0,0x60,0x51e00,0x60,0x11e00,0x40600,0x0,0x0,0x51e00,0x51e00,0x180,0x60,0x1e0,0x1e0,0x1ff,0x1ff,0x51e00,0x40000,0x0,0x0,0x51e00,0x0,0x51e00,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1f,0x0,0x40200,0x40200,};
+      jj_la1_2 = new int[] {0x71fff,0x71fff,0x20000,0x20000,0x60000,0x60000,0x0,0x60,0x51e00,0x11e00,0x40600,0x0,0x0,0x51e00,0x51e00,0x180,0x60,0x1e0,0x1e0,0x1ff,0x1ff,0x51e00,0x40000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1f,0x0,0x40200,0x40200,};
    }
 
   /** Constructor with InputStream. */
@@ -1894,7 +1906,7 @@ v.numErr++;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -1908,7 +1920,7 @@ v.numErr++;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -1918,7 +1930,7 @@ v.numErr++;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -1928,7 +1940,7 @@ v.numErr++;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -1937,7 +1949,7 @@ v.numErr++;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -1946,7 +1958,7 @@ v.numErr++;
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 37; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -2002,7 +2014,7 @@ v.numErr++;
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 41; i++) {
+    for (int i = 0; i < 37; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

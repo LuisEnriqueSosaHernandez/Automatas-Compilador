@@ -91,6 +91,8 @@ public class Actualizador {
         }
         this.existe=true;
 		vista.output.setText("");
+                vista.output2.setText("");
+                vista.output3.setText("");
      }
     
     //Funcion al cerrar la ventana
@@ -407,27 +409,36 @@ public void soloGuardar(Vista vista)
             
             if(togle)
             {
-            vista.icono.setIcon(vista.im1);
+                
+            //vista.icono.setIcon(vista.im1); //Ya no tenemos icono
             vista.input.setBackground(Color.white);
             vista.input.setForeground(Color.BLACK);
             vista.input.setCaretColor(Color.BLUE);
             vista.output.setBackground(Color.WHITE);
             vista.output.setForeground(Color.BLACK);
+            vista.output2.setBackground(Color.WHITE);
+            vista.output2.setForeground(Color.BLACK);
+            vista.output3.setBackground(Color.WHITE);
+            vista.output3.setForeground(Color.BLACK);
             }
             
             else{
-            vista.icono.setIcon(vista.im2);
+            //vista.icono.setIcon(vista.im2); //Ya no tenemos icono
             vista.input.setBackground(Color.DARK_GRAY);
             vista.input.setForeground(Color.WHITE);
-            
             vista.input.setCaretColor(Color.CYAN);
             vista.output.setBackground(Color.DARK_GRAY);
             vista.output.setForeground(Color.WHITE);
+             vista.output2.setBackground(Color.DARK_GRAY);
+            vista.output2.setForeground(Color.WHITE);
+             vista.output3.setBackground(Color.DARK_GRAY);
+            vista.output3.setForeground(Color.WHITE);
             }
             
             vista.colorearSplit(vista.principal, color);
             vista.colorearSplit(vista.sp, color);
-            vista.iconPane.setBackground(color);
+            vista.colorearSplit(vista.sl, color);
+            //vista.iconPane.setBackground(color);////Ya no tenemos icono
             encendido=togle;	
             vista.repaint();
           

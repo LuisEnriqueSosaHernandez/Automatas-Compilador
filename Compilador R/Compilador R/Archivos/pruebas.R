@@ -1,4 +1,10 @@
-#comparadores
+i=0;
+b=1;
+val=1;
+value=1;
+k=10;
+a=5;
+#comentario
 if(a==5){
 }
 if(a==5&&4>2||4<3&&5>=10||3<=4){
@@ -50,13 +56,13 @@ function x(){
 }
 function x(a){
 a=10;
-a;
+
 }
 function x(a,b,c){
 a=10;
 }
 #operadores
-a=a+a;
+a=a;
 a=a-a;
 a=a*a;
 a=a/a;

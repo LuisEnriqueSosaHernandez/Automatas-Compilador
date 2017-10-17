@@ -36,17 +36,17 @@ public class Compilador{
   public void analisisLexico(Vista v, Compilador comp)  throws ParseException
   {
 				//Análisis Léxico	
-				v.output.appendBlue("*****INICIANDO AN\u00c1LISIS L\u00c9XICO*****\n\t");
+				v.output3.appendBlue("*****INICIANDO AN\u00c1LISIS L\u00c9XICO*****\n\t");
 				try
 					{comp.input(comp, v);}
 					catch(ParseException e)
 					{
-					 v.output.appendRed("Error sint\u00E1ctico: "+e.getMessage());
+					 v.output3.appendRed("Error sint\u00E1ctico: "+e.getMessage());
                                          
 					}
 					catch(TokenMgrError e)
 					{
-					  v.output.appendRed("Error: Caracter no v\u00E1lido: "+e.getMessage());
+					  v.output3.appendRed("Error: Caracter no v\u00E1lido: "+e.getMessage());
                                          
 					}						
 	}
@@ -54,10 +54,9 @@ public class Compilador{
 	public void analisisSintactico(Vista v, Compilador comp)throws ParseException
 	{
 	//Análisis Síntáctico	
-				v.output2.appendBlue("\n\t*****INICIANDO AN\u00c1LISIS SINT\u00c1CTICO*****\n\t");
+				v.output.appendBlue("\n\t*****INICIANDO AN\u00c1LISIS SINT\u00c1CTICO*****\n\t");
 				v.numErr=0;
 				v.errores="";
-	
 				try
 					{
 					v.errores="";
@@ -65,13 +64,12 @@ public class Compilador{
 					
 					if(v.numErr==0)
 					{
-					v.output2.appendGreen("\n\rCompilaci\u00f3n Terminada con \u00c9xito");
-                                        JOptionPane.showMessageDialog(v, "Compilaci\u00F3n exitosa", "No encontramos ning\u00fan problema" , JOptionPane.INFORMATION_MESSAGE);
-					}
+					v.output.appendGreen("\n\rCompilaci\u00f3n Terminada con \u00c9xito");
+                                        }
 					else
 					{
-					v.output2.appendRed("\n\rCompilación Terminada con"+v.numErr+" errores:\n\r");
-					v.output2.appendRed(v.errores);
+					v.output.appendRed("\n\rCompilaci\u00f3n Terminada con "+v.numErr+" errores:\n\r");
+					v.output.appendRed(v.errores);
 					}
 					
 					
@@ -79,13 +77,39 @@ public class Compilador{
 					}
 					catch(ParseException e)
 					{
-					 v.output2.append("Error sint\u00E1ctico: "+e.getMessage());
+					 v.output.appendRed("Error sint\u00E1ctico: "+e.getMessage());
 					}
 					catch(TokenMgrError e)
 					{
-					  v.output2.append("Error: Caracter no v\u00E1lido: "+e.getMessage());
+					  v.output.appendRed("Error: Caracter no v\u00E1lido: "+e.getMessage());
 					}	
+                                          
 	}
+public void analisisSemantico(Vista v, Compilador comp)throws ParseException
+        {
+        //Análisis Semantico	
+                               
+                                 v.output2.appendBlue("\u005cn\u005ct*****INICIANDO AN\u00c1LISIS SEM\u00c1NTICO*****\u005cn\u005ct");
+                               
+                                           if(v.numErrS==0){
+                                             v.output2.appendGreen("\u005crCompilaci\u00f3n Terminada con \u00c9xito\u005cn");
+                                           v.output2.appendBlue("Variables declaradas "+VerificacionToken.mostrar()+"\u005cn");
+                                        JOptionPane.showMessageDialog(v, "Compilaci\u00f3n exitosa", "No encontramos ning\u00fan problema" , JOptionPane.INFORMATION_MESSAGE);
+                                        
+                                        }
+                                        else
+                                        {
+                                      v.output2.appendRed("\u005cn\u005crCompilaci\u00f3n Terminada con "+v.numErrS+" errores:\u005cn\u005cr");
+                                        v.output2.appendBlue("Variables declaradas "+VerificacionToken.mostrar()+"\u005cn");
+                                          v.output2.appendRed(v.erroresS);
+                                        }
+
+
+                                        System.out.println("ANALISIS SEMANTICO FINALIZADO");
+                                        
+                                       
+                                           
+        }
 
  
   public static void cerrar()
@@ -279,7 +303,7 @@ void input(Compilador analiza, Vista v):{String mensaje;}
     (mensaje=revisarTokens()
     {
        //analiza.archtoken_escribe(mensaje);
-       v.output.append(mensaje+"\n"); 
+       v.output3.append(mensaje+"\n"); 
     })+<EOF>
 }
 
@@ -606,19 +630,21 @@ void arreglo():
 
 void declaraciones(Vista v):
 {System.out.println("Declaro");
+Token img;
 }
 {
 		try{
+                  
 		//declara()
-		<ident>((<asignacion>|<asignaciondos>) (operacion(v)|arreglo()))? <puntocoma> 
-		
+                 img=<ident>((<asignacion>|<asignaciondos>)
+                    (operacion(v)|arreglo())) <puntocoma> 
+                 {VerificacionToken.InsertarDeclaracion(img.image,img.kind);}
 		}
 		catch(ParseException e)
 		{
 		v.numErr++;
 		v.errores=v.errores+"Error sint\u00E1ctico: Error al declarar variable\n\r"+e.getMessage();
-		Token t;	
-		
+		Token t;
 		do
 		{t=getNextToken();	
 		}while(t.kind != EOF  && t.kind!=puntocoma &&t.kind!=asignaciondos &&t.kind!=asignacion  );
@@ -674,9 +700,12 @@ void operador():
 }
 
 void operando(Vista v):
-{}
+{Token img;}
 {
-	(<ident> 
+	((img=<ident>){if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}
 	| dato())
 	|(<abreparentesis>(operacion(v))<cierraparentesis>)
 }
@@ -714,12 +743,15 @@ printwrite(v)
 }
 
 void printwrite(Vista v):
-{}
+{Token img;}
 {
 		//Mode, ls, history 
 		try{
 		
-		<mode><abreparentesis><ident><cierraparentesis><puntocoma>
+		<mode><abreparentesis>(img=<ident>){if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}<cierraparentesis><puntocoma>
 		
 		|<ls><abreparentesis><cierraparentesis><puntocoma>
 		
@@ -743,10 +775,16 @@ void printwrite(Vista v):
 						<cadena>
 						|operacion(v))<cierraparentesis><puntocoma>
 				
-		|<rm><abreparentesis><ident><cierraparentesis><puntocoma>
+		|<rm><abreparentesis>(img=<ident>){if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}<cierraparentesis><puntocoma>
 		//function
 		
-		|<function><ident><abreparentesis>(<ident>(<coma><ident>)*)*<cierraparentesis><abrellave>(instrucciones(v)|<ident><puntocoma>)<cierrallave>
+		|<function>(img=<ident>) {VerificacionToken.InsertarDeclaracion(img.image,img.kind);}<abreparentesis>
+((img=<ident>) {VerificacionToken.InsertarDeclaracion(img.image,img.kind);}( <coma>(img=<ident>) 
+{VerificacionToken.InsertarDeclaracion(img.image,img.kind);})*)*<cierraparentesis><abrellave>
+(instrucciones(v)|<ident><puntocoma>)<cierrallave>
 		}
 		catch(ParseException e)
 		{
@@ -756,7 +794,7 @@ void printwrite(Vista v):
 		
 		do
 		{t=getNextToken();	
-		}while(t.kind != EOF && t.kind!=puntocoma);
+		}while(t.kind != EOF && t.kind!=puntocoma&&t.kind!=ident);
 		}
 
 }
@@ -771,11 +809,11 @@ void printwrite(Vista v):
 		|<aumento>|<decremento>|<gatito>)
 }*/
 
-void concatenar():
+/*void concatenar():
 {}
 {
 	(dato()|<ident>) (<suma> (dato()|<ident>))*
-}
+}*/
 
 /*void scan(Vista v):
 {}
@@ -787,7 +825,7 @@ void concatenar():
 		catch(ParseException e)
 		{
 		v.numErr++;
-		v.errores=v.errores+"Error sint\u00E1ctico: Error en instrucci\u00f3n de entrada\n\r" +e.getMessage();
+		v.errores=v.errores+"Error sintáctico: Error en instrucción de entrada\n\r" +e.getMessage();
 		Token t;	
 		
 		do
@@ -848,12 +886,15 @@ void defaultt(Vista v):
 	(<falta><dospuntos>instrucciones(v)breakk())*
 }
 void switchh(Vista v):
-{}
+{Token img;}
 {
 	
  
         try{
-            <elegir><abreparentesis><ident><cierraparentesis><abrellave>(casos(v))*<cierrallave>
+            <elegir><abreparentesis>img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}<cierraparentesis><abrellave>(casos(v))*<cierrallave>
 		}
 		catch(ParseException e)
 		{
@@ -933,14 +974,38 @@ void wwhile(Vista v):
 void dowhile(Vista v):
 {}
 {
-	<hacer><abrellave>instrucciones(v)<cierrallave><mientras><abreparentesis>condicion(v)<cierraparentesis><puntocoma>
+	
+         try{
+           <hacer><abrellave>instrucciones(v)<cierrallave><mientras><abreparentesis>condicion(v)<cierraparentesis><puntocoma>
+		}
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sint\u00E1ctico: Error en ciclo do while \n\r" +e.getMessage();
+		Token t;	
+		
+		do
+		{t=getNextToken();	
+		
+                }while(t.kind != EOF && t.kind!=cierrallave && t.kind!=abrellave && t.kind!=cierraparentesis && t.kind!=abreparentesis 
+                 &&t.kind!=hacer);
+		}
 }
 
 void ffor(Vista v):
-{}
+{Token img;}
 {
 try{
-<hasta><abreparentesis><ident><in>(<num>|<ident>)<dospuntos>(<num>|<ident>)
+<hasta><abreparentesis>img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}<in>(<num>|img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }})<dospuntos>(<num>|img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }})
 	<cierraparentesis><abrellave>instrucciones(v)<cierrallave>
 
 
