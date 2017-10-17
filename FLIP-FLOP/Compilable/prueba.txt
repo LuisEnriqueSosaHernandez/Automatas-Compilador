@@ -1,6 +1,6 @@
 entrada
 main
-programa 
+programa
 constante
 salida
 hacer si
@@ -20,8 +20,6 @@ ciclo
 ||
 &&
 !
-verdad
-falso
 =
 ++
 --
@@ -53,9 +51,15 @@ car
 palabra
 doble
 vacio
+verdad
+falso
 1234
 -1234
 1234.1234
 'a'
 "hola1"
 variable111
+###
+###comentario1sh32
+#esto es un comentario
+j111
