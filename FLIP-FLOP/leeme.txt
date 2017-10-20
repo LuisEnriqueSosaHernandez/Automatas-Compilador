@@ -1,0 +1,18 @@
+para compilar la gramatica que esta en el archivo l se tienen que situar en la carpera principal donde esta el archivo flex
+y desde cmd ejecutar la siguiente instruccion
+
+flex nombrearchivo.l
+
+lo anterior genera un .c el cual ponen en un proyecto nuevo en codebloks o dec para que les genere el ejecutable que esta
+en la capeta bin/debug de proyecto en codeblocks.
+
+El anterior archivo exe debe copiarse en la carpeta donde se encuentra el exe del proyecto de visual o interfaz grafica,el
+cual se encuentra tambien en bin/debug.
+Con los pasos anteriores es posible hacer uso de la impresion del generador escrito en c en la intrefaz de c# o cualquier
+otra interfaz aprovechando la impresion y pasandole el argumento mediante consola.
+El argumento es el nombre del archivo a leer.
+
+Esto se encuentra en el evento de boton de compilar.
+De preferencia usar el archivo prueba.flip que contiene todos los tokens de la gramatica.
+
+LESH.

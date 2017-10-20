@@ -1,0 +1,40 @@
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.exe.config
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.exe
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.pdb
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csprojResolveAssemblyReference.cache
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.Form1.resources
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.Properties.Resources.resources
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csproj.GenerateResource.Cache
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csproj.CoreCompileInputs.cache
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.exe
+C:\Users\JAIR_\source\repos\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.pdb
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.exe.config
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.exe
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.pdb
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csprojResolveAssemblyReference.cache
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.Form1.resources
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.Properties.Resources.resources
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csproj.GenerateResource.Cache
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csproj.CoreCompileInputs.cache
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.exe
+C:\Users\jaque\Desktop\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.pdb
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.exe.config
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.exe
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.pdb
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csprojResolveAssemblyReference.cache
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.Form1.resources
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.Properties.Resources.resources
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csproj.GenerateResource.Cache
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csproj.CoreCompileInputs.cache
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.exe
+C:\Users\pc\Desktop\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.pdb
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.exe.config
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.exe
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\bin\Debug\AnalisisLexico.pdb
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csprojResolveAssemblyReference.cache
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.Form1.resources
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.Properties.Resources.resources
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csproj.GenerateResource.Cache
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.csproj.CoreCompileInputs.cache
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.exe
+C:\Users\pc\Documents\Universidad\septimo semestre\Other\FLIP-FLOP\AnalisisLexico\AnalisisLexico\obj\Debug\AnalisisLexico.pdb
