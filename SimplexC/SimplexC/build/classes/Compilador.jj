@@ -1,0 +1,994 @@
+options
+{
+   STATIC = false;
+   KEEP_LINE_COLUMN= true;
+   IGNORE_CASE = false;
+   ERROR_REPORTING=true;
+}
+
+
+PARSER_BEGIN(Compilador)
+  import java.io.*;
+  import java.lang.*;
+  import java.util.*;
+  import javax.swing.*;
+ 
+public class Compilador{
+  public static  FileOutputStream Token1;
+  public static  DataOutputStream Token2;
+	
+	
+	public static void main(String args[]) throws ParseException
+	{
+		Actualizador modelo= new Actualizador();
+        Vista vista=new Vista();
+        
+        OyenteBox oye= new OyenteBox(vista, modelo);
+        OyenteBotones oye2= new OyenteBotones(vista, modelo);
+        vista.addEventoCounter(oye);
+        vista.addEventoBotones(oye2);
+	}
+  
+
+  
+  
+     
+  public void analisisLexico(Vista v, Compilador comp)  throws ParseException
+  {
+				//Análisis Léxico	
+				v.output3.appendBlue("*****INICIANDO AN\u00c1LISIS L\u00c9XICO*****\n\t");
+				try
+					{comp.input(comp, v);}
+					catch(ParseException e)
+					{
+					 v.output3.appendRed("Error sint\u00E1ctico: "+e.getMessage());
+                                         
+					}
+					catch(TokenMgrError e)
+					{
+					  v.output3.appendRed("Error: Caracter no v\u00E1lido: "+e.getMessage());
+                                         
+					}						
+	}
+
+	public void analisisSintactico(Vista v, Compilador comp)throws ParseException
+	{
+	//Análisis Síntáctico	
+				v.output.appendBlue("\n\t*****INICIANDO AN\u00c1LISIS SINT\u00c1CTICO*****\n\t");
+				v.numErr=0;
+				v.errores="";
+				try
+					{
+					v.errores="";
+					comp.programa(v);
+					
+					if(v.numErr==0)
+					{
+					v.output.appendGreen("\n\rCompilaci\u00f3n Terminada con \u00c9xito");
+                                        }
+					else
+					{
+					v.output.appendRed("\n\rCompilaci\u00f3n Terminada con "+v.numErr+" errores:\n\r");
+					v.output.appendRed(v.errores);
+					}
+					
+					
+					System.out.println("ANALISIS SINTACTICO FINALIZADO");
+					}
+					catch(ParseException e)
+					{
+					 v.output.appendRed("Error sint\u00E1ctico: "+e.getMessage());
+					}
+					catch(TokenMgrError e)
+					{
+					  v.output.appendRed("Error: Caracter no v\u00E1lido: "+e.getMessage());
+					}	
+                                          
+	}
+public void analisisSemantico(Vista v, Compilador comp)throws ParseException
+        {
+        //Análisis Semantico	
+                               
+                                 v.output2.appendBlue("\u005cn\u005ct*****INICIANDO AN\u00c1LISIS SEM\u00c1NTICO*****\u005cn\u005ct");
+                               
+                                           if(v.numErrS==0){
+                                             v.output2.appendGreen("\u005crCompilaci\u00f3n Terminada con \u00c9xito\u005cn");
+                                           v.output2.appendBlue("Variables declaradas "+VerificacionToken.mostrar()+"\u005cn");
+                                        JOptionPane.showMessageDialog(v, "Compilaci\u00f3n exitosa", "No encontramos ning\u00fan problema" , JOptionPane.INFORMATION_MESSAGE);
+                                        
+                                        }
+                                        else
+                                        {
+                                      v.output2.appendRed("\u005cn\u005crCompilaci\u00f3n Terminada con "+v.numErrS+" errores:\u005cn\u005cr");
+                                        v.output2.appendBlue("Variables declaradas "+VerificacionToken.mostrar()+"\u005cn");
+                                          v.output2.appendRed(v.erroresS);
+                                        }
+
+
+                                        System.out.println("ANALISIS SEMANTICO FINALIZADO");
+                                        
+                                       
+                                           
+        }
+
+ 
+  public static void cerrar()
+  {
+    try
+    {
+      Token1.close();
+    }
+    catch (IOException Ex)
+    {
+      System.out.println("No se cerro el archivo corectamente");
+    }
+   }
+  
+ 
+  
+}
+PARSER_END(Compilador)
+
+
+///////////////////////////////////////////////////////////////////////////////
+///A	N	A	L	I	S	I	S		L	E	X	I	C	O
+/////////////////////////////////////////////////////////////////////////////// 
+//Declaración de los Tokens
+
+//SALTO
+SKIP:
+{
+ "\t"
+|"\r"
+|" "
+|"\n" 
+}
+
+//PALABRAS RESERVADAS
+TOKEN:
+{
+//SALTO DE LINEA
+//CONDICIONALES
+<si: ("i")("f")>{}	//if                                   
+|<sino:("e")("l")("s")("e")> //else     
+|<elegir: ("s")("w")("i")("t")("c")("h")>  //switch
+|<caso: ("c")("a")("s")("e")> //case
+|<salir: ("b")("r")("e")("a")("k")> //break
+|<falta: ("d")("e")("f")("a")("u")("l")("t")> //default
+
+//TIPOS DE DATO   					
+|<ent:("i")("n")("t")>  //entero
+|<largo:("l")("o")("n")("g")>  //long
+|<flot:("f")("l")("o")("a")("t")> //float
+|<doble:("d")("o")("u")("b")("l")("e")>//doble
+|<cad:("s")("t")("r")("i")("n")("g")> //string
+|<bool:("b")("o")("o")("l")> //booleano
+			
+//SENTENCIAS E/S							
+|<print:("p")("r")("i")("n")("t")>//imprime
+|<leer:	("s")("c")("a")("n")("f")>	
+//lenght
+|<function:("f")("u")("n")("c")("t")("i")("o")("n")>
+//crea funciones
+//CICLOS
+|<mientras:("w")("h")("i")("l")("e")> //While										
+|<hasta:("f")("o")("r")> //for								
+|<hacer:("d")("o")> //do
+		
+
+//ESTRUCTURA GENERAL
+|<inicio:("m")("a")("i")("n")>
+|<fin:("r")("e")("t")("u")("r")("n")>{System.out.println("\t\t\t\t Palabra reservada fin");}						
+}
+
+//NO PERMITIDOS 
+TOKEN:
+{
+<enojo: "\u00AC"> 
+|<palito: "|">
+|<grados: "\u00B0">
+|<admira1: "!">
+|<admira2: "\u00A1">
+|<pesos: "$">
+|<amperson: "&">
+|<comilla1: "'">
+//|<diagonal: "\u005C">
+|<abrepregunta: "\u00BF">
+|<comilla2: "\u00B4">
+|<comilla3: "`">
+|<dospuntosarriba: "\u00A8">
+|<culebrita: "~">
+|<guionbajo: "_">
+|<gato: "#">
+}
+
+//DELIMITADORES
+TOKEN:
+{
+<abreparentesis:"(">   												
+|<cierraparentesis:")">												
+|<abrellave:"{">    												 
+|<cierrallave:"}"> 
+
+|<abrecorchete:"[">
+
+|<cierracorchete:"]">
+ 												 
+//|<comilla:"'">    													
+|<comillas: "\""> //Para cadenas													
+|<gatito:"//">  	//Para comentarios										
+|<puntocoma:";">  //Para finalizar una sentencia   
+|<punto: "."> 		
+|<coma: ",">
+|<dospuntos:":">								         																					   
+}
+
+//OPERADORES
+TOKEN:
+{
+//Aritméticos
+<suma:"+">        												 
+|<resta:"-">         												
+|<multiplicar:"*">   
+|<dividir:"/">  
+|<modulo: "%">
+|<potencia: "^">
+
+//Lògicos
+//|<no:"?">											 											
+|<y:"&&">          												
+|<o:"||"> 
+
+//De comparación       																				 
+|<menor:"<">      											
+|<mayor:">">      												 
+|<menorigual:"<="> 												
+|<mayorigual:">="> 
+|<igual:"==">       											
+|<diferente:"!=">  
+
+//Otros
+|<asignacion:"=">
+|<aumento:"++">         
+|<decremento:"--">         												
+}
+
+//DECLARACION DE TIPOS DE DATOS
+TOKEN:
+{
+<num:(["0"-"9"])+> //Entero
+//|<long:(["0"-"9"])+>
+|<flotante: ((["0"-"9"])+ <punto> (["0"-"9"])+ )> //Flotante
+//|<double: ((["0"-"9"])+ <punto> (["0"-"9"])+ )> //Flotante
+|<booleano: ("true") | ("false") >
+|<nulo: ("null")>		
+	
+|<unicodeMin:"\u00E1" |"\u00E9" |"\u00ED" |"\u00F3" |"\u00FA" |"\u00FC" |"\u00F1" >
+        
+|<unicodeMay:"\u00C1" |"\u00C9" |"\u00CD" |"\u00D3" |"\u00DA" |"\u00DC" |"\u00D1">
+
+|<unicodeSimb: "\u00A1" |"\u00BF" |"\u0021" |"\u003F" >
+
+//Token String							
+|<cadena: <comillas> ((["A"-"Z","a"-"z"])|("?")|(" ")| <abreparentesis> |<cierraparentesis> |<abrellave> |<cierrallave>|<abrecorchete>|<cierracorchete>
+|<comillas> |<gatito> |<puntocoma> |<asignacion>|<suma> |<resta> |<multiplicar> |<dividir> |<modulo>|<potencia>|<punto>|<dospuntos>
+|<y> |<o> |<menor> |<mayor> |<coma> |("¿")|("~")| "!" |"¡" |":" |"-" |"_" |"º"|"$"|"^"|"#"|<num> |["0"-"9"]                                                                | <unicodeMin> | <unicodeMay> |<unicodeSimb>)* <comillas>>
+
+/*
+|<caracter: <comilla> ((["A"-"Z","a"-"z"])|("?")|(" ")| <abreparentesis> |<cierraparentesis> |<abrellave> |<cierrallave>
+								|<comilla> |<comillas> |<arroba> |<puntocoma> |<asignacion>|<asignaciondos> |<suma> |<resta> |<multiplicar> |<dividir> |<modulo> |<potencia>
+								|<no> |<y> |<o> |<menor> |<mayor> |<coma> |("~")| "!" |":" |"-" |"_" |"$"|"º"|"$"|"^" |"#"
+								|["0"-"9"] 
+                                                                | <unicodeMin> | <unicodeMay> |<unicodeSimb>
+                                                                ) <comilla>>*/
+
+|<comentario: <gatito>((["A"-"Z","a"-"z"])|("?")|(" ")| <abreparentesis> |<cierraparentesis> |<abrellave> |<cierrallave>|<abrecorchete>|<cierracorchete>
+|<comillas> |<gatito> |<puntocoma> |<asignacion> |<suma> |<resta> |<multiplicar> |<dividir> |<modulo> |<potencia>|<punto>|<dospuntos>
+|<y> |<o> |<menor> |<mayor> |<coma> |("¿")|("~")| "!" |"¡" |":" |"-" |"_" |"º"|"$"|"^"|"#"|<num> |["0"-"9"]                                                                | <unicodeMin> | <unicodeMay> |<unicodeSimb>)+>
+
+
+
+//IDENTFICADORES Usado para variables y funciones;
+| <ident: (["a"-"z"] | <unicodeMin>)(["A"-"Z","a"-"z"]|(["0"-"9"])|"_" | <unicodeMin> | <unicodeMay>)* >
+
+}
+
+
+void input(Compilador analiza, Vista v):{String mensaje;}
+{
+    (mensaje=revisarTokens()
+    {
+       //analiza.archtoken_escribe(mensaje);
+       v.output3.append(mensaje+"\n"); 
+    })+<EOF>
+}
+
+
+String revisarTokens(): {Token t; }
+{
+//CONDICIONALES
+
+t=<si>
+	{ return ( t.image +"\t\t\t\t Palabra reservada if" );  }
+	
+| t=<sino>
+	{ return ( t.image +"\t\t\t\t Palabra reservada else");}	
+
+| t=<elegir>
+	{ return ( t.image +"\t\t\t\t Palabra reservada switch");}
+	
+| t=<caso>
+	{ return ( t.image +"\t\t\t\t Palabra reservada case");}
+
+| t=<salir>
+	{ return ( t.image +"\t\t\t\t Palabra reservada break");}	
+
+| t=<falta>
+	{ return ( t.image +"\t\t\t\t Palabra reservada default");}
+
+
+//TIPOS DE DATOS
+| t=<ent>
+	{ return ( t.image +"\t\t\t\t Palabra reservada int");}
+| t=<largo>
+	{ return ( t.image +"\t\t\t\t Palabra reservada long");}
+
+| t=<flot>
+	{ return ( t.image +"\t\t\t\t Palabra reservada float");}
+| t=<doble>
+	{ return ( t.image +"\t\t\t\t Palabra reservada double");}
+
+/*t=<car>
+	{ return ( t.image +"\t\t\t\t Palabra reservada car");}*/
+
+| t=<cad>
+	{ return ( t.image +"\t\t\t Palabra reservada string");}
+
+| t=<bool>
+	{ return ( t.image +"\t\t\t\t Palabra reservada booleano");}
+
+//SENTENCIAS
+| t=<print>
+	{ return ( t.image +"\t\t\t\t Palabra reservada print");}
+| t=<function>
+	{ return ( t.image +"\t\t\t\t Palabra reservada function");}
+	| t=<leer>
+	{ return ( t.image +"\t\t\t\t Palabra reservada scanf");}
+
+//CICLOS
+| t=<mientras>
+	{ return ( t.image +"\t\t\t\t Palabra reservada while");}
+
+| t=<hasta>
+	{ return ( t.image +"\t\t\t\t Palabra reservada for");}
+	
+|t=<hacer>
+	{ return ( t.image +"\t\t\t\t Palabra reservada hacer");}
+
+//ESTRUCTURALES
+|t=<inicio>
+	{ return ( t.image +"\t\t\t\t Palabra reservada inicio");}
+	
+| t=<fin>
+	{ return ( t.image +"\t\t\t\t Palabra reservada fin");}
+//DELIMITADORES
+| t=<abreparentesis>
+	{ return ( t.image +"\t\t\t\t Delimitador (");}
+
+| t=<cierraparentesis>
+	{ return ( t.image +"\t\t\t\t Delimitador )");}
+
+| t=<abrellave>
+	{ return ( t.image +"\t\t\t\t Delimitador {");}
+	
+| t=<cierrallave>
+	{ return ( t.image +"\t\t\t\t Delimitador }");}
+
+| t=<abrecorchete>
+	{ return ( t.image +"\t\t\t\t Delimitador [");}
+
+| t=<cierracorchete>
+	{ return ( t.image +"\t\t\t\t Delimitador ]");}
+
+/*t=<comilla>
+	{ return ( t.image +"\t\t\t\t Delimitador '");}
+*/
+| t=<comillas>
+	{ return ( t.image +"\t\t\t\t Delimitador \" ");}
+
+| t=<gatito>
+	{ return ( t.image +"\t\t\t\t Delimitador #");}
+	
+| t=<puntocoma>
+	{ return ( t.image +"\t\t\t\t Delimitador ;");}
+
+|t=<punto>
+	{ return ( t.image +"\t\t\t\t Delimitador .");}
+	
+|t=<coma>
+	{ return ( t.image +"\t\t\t\t Delimitador ,");}	
+
+| t=<dospuntos>
+	{ return ( t.image +"\t\t\t\t Delimitador :");}
+
+//NO PERMITIDOS
+| t=<enojo>
+	{ return ( t.image +"\t\t\t\t Caracter no valido \u00AC");}
+| t=<gato>
+	{ return ( t.image +"\t\t\t\t Caracter no valido #");}
+	
+| t=<palito>
+	{ return ( t.image +"\t\t\t\t Caracter no valido |");}
+	
+| t=<grados>
+	{ return ( t.image +"\t\t\t\t Caracter no valido \u00B0");}
+	
+| t=<admira1>
+	{ return ( t.image +"\t\t\t\t Caracter no valido !");}
+	
+| t=<admira2>
+	{ return ( t.image +"\t\t\t\t Caracter no valido \u00A1");}
+	
+| t=<pesos>
+	{ return ( t.image +"\t\t\t\t Caracter no valido $");}
+	
+| t=<amperson>
+	{ return ( t.image +"\t\t\t\t Caracter no valido &");}
+	
+| t=<comilla1>
+	{ return ( t.image +"\t\t\t\t Caracter no valido '");}
+	
+/*| t=<diagonal>
+	{ return ( t.image +"\t\t\t\t Caracter no valido \u005C");}
+	*/
+| t=<abrepregunta>
+	{ return ( t.image +"\t\t\t\t Caracter no valido \u00BF");}
+	
+| t=<comilla2>
+	{ return ( t.image +"\t\t\t\t Caracter no valido \u00B4");}
+	
+| t=<comilla3>
+	{ return ( t.image +"\t\t\t\t Caracter no valido `");}
+	
+| t=<dospuntosarriba>
+	{ return ( t.image +"\t\t\t\t Caracter no valido \u00A8");}
+	
+| t=<culebrita>
+	{ return ( t.image +"\t\t\t\t Caracter no valido ~");}
+	
+| t=<guionbajo>
+	{ return ( t.image +"\t\t\t\t Caracter no valido _");}
+	
+
+//OPERADORES ARITMETICOS
+| t=<suma>
+	{ return ( t.image +"\t\t\t\t Operador aritmetico SUMA +");}
+
+| t=<resta>
+	{ return ( t.image +"\t\t\t\t Operador aritmetico RESTA -");}				
+
+| t=<multiplicar>
+	{ return ( t.image +"\t\t\t\t Operador aritmetico PRODUCTO *");}
+
+| t=<dividir>
+	{ return ( t.image +"\t\t\t\t Operador aritmetico COCIENTE /");}
+
+| t=<modulo>
+	{ return ( t.image +"\t\t\t\t Operador aritmetico RESIDUO %");}
+	
+| t=<potencia>
+	{ return ( t.image +"\t\t\t\t Operador aritmetico POTENCIA ^");}
+
+//OPERADORES LÓGICOS
+/*t=<no>
+	{ return ( t.image +"\t\t\t\t Operador logico NOT ?");}
+*/
+| t=<y>
+	{ return ( t.image +"\t\t\t\t Operador logico AND &");}
+
+| t=<o>
+	{ return ( t.image +"\t\t\t\t Operador logico OR ||");}
+
+//OPERADORES DE COMPARACION
+| t=<menor>
+	{ return ( t.image +"\t\t\t\t Operador comparativo <");}
+	
+| t=<mayor>
+	{ return ( t.image +"\t\t\t\t Operador comparativo >");}
+
+
+| t=<menorigual>
+	{ return ( t.image +"\t\t\t\t Operador comparativo <=");}
+
+
+| t=<mayorigual>
+	{ return ( t.image +"\t\t\t\t Operador comparativo >=");}
+
+| t=<asignacion>
+	{ return ( t.image +"\t\t\t\t Operador aritmetico =");}
+
+| t=<igual>
+	{ return ( t.image +"\t\t\t\t Operador comparativo ==");}
+
+| t=<diferente>
+	{ return ( t.image +"\t\t\t\t Operador comparativo !=");}
+
+//ASIGNACION
+| t=<aumento>
+	{ return ( t.image +"\t\t\t\t Operador aritmetico AUMENTO ++");}
+
+| t=<decremento>
+	{ return ( t.image +"\t\t\t\t Operador aritmetico DECREMENTO --");}
+
+|t=<nulo>
+	{ return ( t.image +"\t\t\t\t Palabra reservada Valor nulo");}
+
+//TIPOS DE DATOS
+| t=<num>
+	{ return ( t.image +"\t\t\t\t Tipo de Dato ENTERO");}
+
+
+| t=<flotante>
+	{ return ( t.image +"\t\t\t\t Tipo de Dato FLOTANTE");}
+
+
+| t=<booleano>
+	{ return ( t.image +"\t\t\t\t Tipo de Dato BOOLEANO");}
+
+| t=<cadena>
+	{ return ( t.image +"\t\t\t\t Tipo de Dato CADENA");}
+
+/*t=<caracter>
+	{
+	return ( t.image +"\t\t\t\t Tipo de Dato CARACTER");
+	}*/
+
+| t=<comentario>
+	{
+	return ( t.image +"\t\t\t\t Comentario");
+	}
+//IDENTIFICADORES
+| t=<ident>
+	{ 
+	return ( t.image +"\t\t\t\t Identificador");  
+	}
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+///A	N	A	L	I	S	I	S		S	I	N	T	A	C	T	I	C	O
+///////////////////////////////////////////////////////////////////////////////
+
+void programa(Vista v):
+{}
+{
+	try{
+		(<comentario>)*<ent><inicio><abrellave>instrucciones(v)<fin><num><puntocoma><cierrallave>(<comentario>)*<EOF>
+                }
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"\nError sint\u00E1ctico: Error al crear estructura el fichero\n\r"+e.getMessage();
+		Token t;
+		do
+		{
+		t=getNextToken();
+		}while(
+		//t.kind !=fin  && 
+		t.kind != EOF);	
+		}	
+}
+
+void instrucciones(Vista v):
+{}
+{
+	(declaraciones(v)
+	|asignaciones(v)    //||||||||||||||AQUI ESTA EL ERROR||||||||||||||||||||||| ya esta usado por declaraciones
+	|ciclos(v)
+	|condicionales(v)
+	|es(v)
+	|comentarios()
+	|scan(v)
+	)*	
+}
+//Arreglos
+void arreglo():
+{}
+{
+<abrecorchete>dato()(<coma> dato())*<cierracorchete>
+
+}
+
+//DECLARACIONES
+
+void declaraciones(Vista v):
+{System.out.println("Declaro");
+Token img;
+}
+{
+		try{
+                  
+		declara()img=<ident>(<asignacion>
+                    (operacion(v)|arreglo())) <puntocoma> 
+                 {VerificacionToken.InsertarDeclaracion(img.image,img.kind);}
+		}
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sint\u00E1ctico: Error al declarar variable\n\r"+e.getMessage();
+		Token t;
+		do
+		{t=getNextToken();	
+		}while(t.kind != EOF  && t.kind!=puntocoma &&t.kind!=asignacion  );
+		}
+}
+
+
+void declara():
+{}
+{
+<ent>
+|<largo>
+|<flot>
+|<doble>
+//|<car>
+|<cad>
+|<bool>
+}
+
+
+void dato():
+{}
+{
+<num>
+|<flotante>
+|<booleano>
+|<nulo>
+|<cadena>
+//|<caracter>
+|neg()
+}
+
+void neg():
+{}
+{
+<resta>(<num>|<flotante>|<ident>)
+}
+
+void operacion(Vista v):
+{System.out.println("Operacion realizada");}
+{
+	operando(v)(operador()operando(v))*
+}
+
+void operador():
+{}
+{
+<suma>
+| <resta>
+| <multiplicar>
+| <dividir>
+| <modulo>
+| <potencia>
+}
+
+void operando(Vista v):
+{Token img;}
+{
+	((img=<ident>){if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}
+	| dato())
+	|(<abreparentesis>(operacion(v))<cierraparentesis>)
+}
+
+
+void asignaciones(Vista v):
+{Token img;}
+{
+		try{
+		(img=<ident>){if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }} ((<aumento>|<decremento>)  |  ( <asignacion>operacion(v) ))? <puntocoma>//no se puede el ++ ni el --
+		}
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sint\u00E1ctico: Error en asignaci\u00f3n\n\r"+e.getMessage();
+		Token t;	
+		
+		do
+		{t=getNextToken();	
+		}while(t.kind != EOF  && t.kind!=puntocoma  && t.kind!=asignacion   &&  t.kind!=aumento  &&t.kind!=decremento );
+		}	
+}
+
+
+void comentarios():
+{}
+{
+<comentario>
+}
+
+void es(Vista v):
+{}
+{
+printwrite(v)
+}
+
+void printwrite(Vista v):
+{Token img;}
+{
+		//Mode, ls, history 
+		try{				
+		<print><abreparentesis>(
+						(img=<ident>){if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}
+             |(<cadena>|operador()|img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}(<suma>(operador()|<cadena>)*))
+			|operacion(v))<cierraparentesis><puntocoma>
+		//function
+		
+		|<function>declara()(img=<ident>) {VerificacionToken.InsertarDeclaracion(img.image,img.kind);}<abreparentesis>
+((img=<ident>) {VerificacionToken.InsertarDeclaracion(img.image,img.kind);}( <coma>(img=<ident>) 
+{VerificacionToken.InsertarDeclaracion(img.image,img.kind);})*)*<cierraparentesis><abrellave>
+instrucciones(v)<fin>(<ident>|dato())<puntocoma><cierrallave>
+		}
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sint\u00E1ctico: Error en instrucci\u00f3n de salida\n\r" +e.getMessage();
+		Token t;	
+		
+		do
+		{t=getNextToken();	
+		}while(t.kind != EOF && t.kind!=puntocoma&&t.kind!=ident);
+		}
+
+}
+
+/*void palabra():
+{}
+{
+		(<mode>|<ls>|<history>|<help>|<print>|<rm>|<function>
+		|<si>|<sino>|<elegir>|<caso>|<salir>|<falta>|<in>|<mientras>|<hasta>|<suma>|<resta>
+		|<multiplicar>|<dividir>|<modulo>|<modulodos>|<potencia>|<y>|<o>|<menor>|<mayor>
+		|<menorigual>|<mayorigual>|<igual>|<diferente>|<asignacion>|<asignaciondos>
+		|<aumento>|<decremento>|<gatito>)
+}*/
+
+/*void concatenar():
+{}
+{
+	(dato()|<ident>) (<suma> (dato()|<ident>))*
+}*/
+
+void scan(Vista v):
+{Token img;}
+{
+
+                try{
+		<leer><abreparentesis>declara()<coma>img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}<cierraparentesis><puntocoma>
+		}
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sintáctico: Error en instrucción de entrada\n\r" +e.getMessage();
+		Token t;	
+		
+		do
+		{t=getNextToken();	
+		}while(t.kind != EOF  && t.kind!=puntocoma && t.kind!=cierraparentesis  && t.kind!=ident && t.kind!=coma && t.kind!=abreparentesis&&t.kind!=comillas);
+		}
+}
+
+/*void tipodato():
+{}
+{
+<ent>
+|<flot>
+|<car>
+|<cad>
+|<bool>
+}*/
+
+void condicionales(Vista v):
+{}
+{
+	ifelse(v) | switchh(v)
+}
+
+void ifelse(Vista v):
+{}
+{
+try{
+<si><abreparentesis>condicion(v)<cierraparentesis><abrellave>instrucciones(v)<cierrallave>(<sino><abrellave>instrucciones(v)<cierrallave>)?		
+		}
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sint\u00E1ctico: Error en condicional if-else\n\r" +e.getMessage();
+		Token t;	
+		
+		do
+		{t=getNextToken();	
+		
+            }while(t.kind != EOF && t.kind!=cierrallave && t.kind!=abrellave && t.kind!=sino && t.kind!=cierrallave && t.kind!=abrellave && t.kind!=cierraparentesis && t.kind!=abreparentesis );
+		}
+}
+void casos (Vista v):
+{}
+{
+	(<caso>dato()<dospuntos>instrucciones(v)breakk())+ defaultt(v)
+}
+
+void breakk():
+{}
+{
+	(<salir><puntocoma>)?
+}
+
+void defaultt(Vista v):
+{}
+{
+	(<falta><dospuntos>instrucciones(v)breakk())*
+}
+void switchh(Vista v):
+{Token img;}
+{
+	
+ 
+        try{
+            <elegir><abreparentesis>img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}<cierraparentesis><abrellave>(casos(v))*<cierrallave>
+		}
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sint\u00E1ctico: Error en condicional m\u00FAltiple \n\r" +e.getMessage();
+		Token t;	
+		
+		do
+		{t=getNextToken();	
+		
+            }while(t.kind != EOF && t.kind!=cierrallave && t.kind!=abrellave && t.kind!=cierraparentesis && t.kind!=ident && t.kind!=abreparentesis);
+		}
+}
+//CONDICIONALES	
+
+void condicion (Vista v):
+{}
+{
+	condicional(v)(operadorlogico()condicional(v))*
+}
+
+void operadorlogico():
+{}
+{
+//<no> 
+<o> 
+| <y>
+}
+
+void condicional(Vista v):
+{}
+{
+	comparacion(v)
+}
+
+void comparacion(Vista v):
+{}
+{
+    operacion(v) comparador() operacion(v)
+}
+
+void comparador():
+{}
+{
+<menor>| <mayor> | <menorigual> | <mayorigual> |  <igual> | <diferente>
+}
+
+
+//CICLOS
+void ciclos(Vista v):
+{}
+{
+wwhile(v)
+|dowhile(v)
+|ffor(v)
+}
+
+void wwhile(Vista v):
+{}
+{
+        try{
+            <mientras> <abreparentesis>condicion(v)<cierraparentesis> <abrellave>instrucciones(v)<cierrallave>
+		}
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sint\u00E1ctico: Error en ciclo while \n\r" +e.getMessage();
+		Token t;	
+		
+		do
+		{t=getNextToken();	
+		
+                }while(t.kind != EOF && t.kind!=cierrallave && t.kind!=abrellave && t.kind!=cierraparentesis && t.kind!=abreparentesis);
+		}
+}
+
+void dowhile(Vista v):
+{}
+{
+	
+         try{
+           <hacer><abrellave>instrucciones(v)<cierrallave><mientras><abreparentesis>condicion(v)<cierraparentesis><puntocoma>
+		}
+		catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sint\u00E1ctico: Error en ciclo do while \n\r" +e.getMessage();
+		Token t;	
+		
+		do
+		{t=getNextToken();	
+		
+                }while(t.kind != EOF && t.kind!=cierrallave && t.kind!=abrellave && t.kind!=cierraparentesis && t.kind!=abreparentesis 
+                 &&t.kind!=hacer);
+		}
+}
+
+void ffor(Vista v):
+{Token img;}
+{
+try{
+<hasta><abreparentesis>img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}<asignacion><num><puntocoma>img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}comparador()(<ident>|<num>)<puntocoma>img=<ident>{if(!VerificacionToken.Existencia(img.image)){
+          v.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+          v.numErrS+=1;
+            }}((<aumento>|<decremento>)|(<suma>|<resta>)<asignacion><num>)
+	<cierraparentesis><abrellave>instrucciones(v)<cierrallave>
+
+
+/*(asignaciones(v)| declaraciones(v))condicion(v)<puntocoma>control(v)<cierraparentesis><abrellave>instrucciones(v)<cierrallave>*/
+}
+
+
+catch(ParseException e)
+		{
+		v.numErr++;
+		v.errores=v.errores+"Error sint\u00E1ctico: Error en ciclo for \n\r" +e.getMessage();
+		Token t;	
+		
+		do
+		{t=getNextToken();	
+		
+                }while(t.kind != EOF && t.kind!=cierrallave && t.kind!=abrellave && t.kind!=cierraparentesis && t.kind!=ident
+				&& t.kind!=num && t.kind!=dospuntos && t.kind!=ident && t.kind!=num && t.kind!=ident && t.kind!=abreparentesis);
+		}
+}
+//RECUERDA QUE HAY UN ERROR EN LA ASIGNACIÓN DEL CASE PARA LA CLASE COMPILADOR.JAVA
+/*void control(Vista v):
+{}
+{
+    <ident>  ((<aumento>|<decremento>)  |  ( (<asignacion>|<asignaciondos>)operacion(v) ) | ((<suma>|<resta>)(<asignacion>|<asignaciondos>))(<num>|neg()) )  
+}*/
