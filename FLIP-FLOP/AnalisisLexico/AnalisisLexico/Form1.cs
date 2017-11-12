@@ -15,9 +15,11 @@ namespace AnalisisLexico
     public partial class  Form1 : Form
 
     {
+        int altura;
         OpenFileDialog BuscarArchivotxt = new OpenFileDialog();
         SaveFileDialog GuardarArchivotxt = new SaveFileDialog();
         string name = "";
+
         public Form1()
         {
             InitializeComponent();
@@ -25,6 +27,8 @@ namespace AnalisisLexico
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            timer1.Interval = 1;
+            timer1.Start();
 
         }
 
@@ -44,7 +48,7 @@ namespace AnalisisLexico
                     System.IO.StreamReader(BuscarArchivotxt.FileName);
                     MessageBox.Show("Archivo abierto correctamente!");
                     string txt = File.ReadAllText(BuscarArchivotxt.FileName);
-                    textBox1.Text = txt;
+                    richTextBox1.Text = txt;
                     Ruta.Text = BuscarArchivotxt.FileName;
                     name = BuscarArchivotxt.FileName;
                     LeerArchivo.Close();
@@ -60,7 +64,7 @@ namespace AnalisisLexico
         {
             try
             {
-                File.WriteAllText(BuscarArchivotxt.FileName, textBox1.Text);
+                File.WriteAllText(BuscarArchivotxt.FileName, richTextBox1.Text);
                 MessageBox.Show("Archivo guardado correctamente!");
             }catch (Exception)
             {
@@ -77,7 +81,7 @@ namespace AnalisisLexico
                 GuardarArchivotxt.Title = "Guardar el archivo de Texto Flip Flop";
                 if (GuardarArchivotxt.ShowDialog() == DialogResult.OK)
                 {
-                    File.WriteAllText(GuardarArchivotxt.FileName, textBox1.Text);
+                    File.WriteAllText(GuardarArchivotxt.FileName, richTextBox1.Text);
                     MessageBox.Show("Archivo guardado correctamente!");
                 }
             }catch (Exception)
@@ -91,7 +95,7 @@ namespace AnalisisLexico
         private void NuevoArchivo_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Archivo en Blanco, <empieza a programar!>");
-            textBox1.Text = "";
+            richTextBox1.Text = "";
         }
 
         private void CerrarPrograma_Click(object sender, EventArgs e)
@@ -135,6 +139,38 @@ namespace AnalisisLexico
             result = compiladorlexico.StandardOutput.ReadToEnd();
             compiladorlexico.WaitForExit();
             textBox2.AppendText(result);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            pictureBox1.Refresh();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            altura = richTextBox1.GetPositionFromCharIndex(0).Y;
+            if (richTextBox1.Lines.Length > 0)
+            {
+                for(int i = 0; i < richTextBox1.Lines.Length ; i++)
+                {
+                    altura = richTextBox1.GetPositionFromCharIndex(richTextBox1.GetFirstCharIndexFromLine(i)).Y;
+                    e.Graphics.DrawString((i + 1).ToString(), richTextBox1.Font, Brushes.Blue, pictureBox1.Width - (e.Graphics.MeasureString((i + 1).ToString(), richTextBox1.Font).Width + 10), altura);
+                }
+            }
+            else
+            {
+                e.Graphics.DrawString("1", richTextBox1.Font, Brushes.Blue, pictureBox1.Width - (e.Graphics.MeasureString("1", richTextBox1.Font).Width + 10), altura);
+            }
         }
     }
 }

@@ -35,13 +35,16 @@
             this.GuardarArchivo = new System.Windows.Forms.Button();
             this.Compilar = new System.Windows.Forms.Button();
             this.CerrarPrograma = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.GuardarComo = new System.Windows.Forms.Button();
             this.Ruta = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // AbrirArchivo
@@ -98,14 +101,6 @@
             this.CerrarPrograma.UseVisualStyleBackColor = true;
             this.CerrarPrograma.Click += new System.EventHandler(this.CerrarPrograma_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(12, 110);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(284, 185);
-            this.textBox1.TabIndex = 5;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -154,18 +149,41 @@
             this.Ruta.Size = new System.Drawing.Size(0, 13);
             this.Ruta.TabIndex = 10;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(37, 110);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(294, 185);
+            this.richTextBox1.TabIndex = 11;
+            this.richTextBox1.Text = "";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(1, 110);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(30, 185);
+            this.pictureBox1.TabIndex = 12;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(675, 326);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.Ruta);
             this.Controls.Add(this.GuardarComo);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.CerrarPrograma);
             this.Controls.Add(this.Compilar);
             this.Controls.Add(this.GuardarArchivo);
@@ -174,6 +192,7 @@
             this.Name = "Form1";
             this.Text = "Analisis Léxico";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,13 +205,15 @@
         private System.Windows.Forms.Button GuardarArchivo;
         private System.Windows.Forms.Button Compilar;
         private System.Windows.Forms.Button CerrarPrograma;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button GuardarComo;
         private System.Windows.Forms.Label Ruta;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
