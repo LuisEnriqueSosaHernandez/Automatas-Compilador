@@ -16,6 +16,8 @@ namespace AnalisisLexico
 
     {
         int altura;
+        string CombinedPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\Archivos");
+        string backupDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\Archivos");
         OpenFileDialog BuscarArchivotxt = new OpenFileDialog();
         SaveFileDialog GuardarArchivotxt = new SaveFileDialog();
         string name = "";
@@ -36,12 +38,12 @@ namespace AnalisisLexico
         {
             try
             {
-                
+                BuscarArchivotxt.InitialDirectory = System.IO.Path.GetFullPath(CombinedPath);
                 BuscarArchivotxt.Filter = "Flip Flop Compiler(*.flip)|*.flip|Todos los archivos (*.*)|*.*";
                 BuscarArchivotxt.Title = "Abrir el archivo de Texto Flip Flop";
-                string CombinedPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\archivos");
-                BuscarArchivotxt.InitialDirectory = System.IO.Path.GetFullPath(CombinedPath);
-               
+
+                BuscarArchivotxt.RestoreDirectory = true;
+
                 if (BuscarArchivotxt.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     System.IO.StreamReader LeerArchivo = new
@@ -161,7 +163,7 @@ namespace AnalisisLexico
             altura = richTextBox1.GetPositionFromCharIndex(0).Y;
             if (richTextBox1.Lines.Length > 0)
             {
-                for(int i = 0; i < richTextBox1.Lines.Length ; i++)
+                for (int i = 0; i < richTextBox1.Lines.Length; i++)
                 {
                     altura = richTextBox1.GetPositionFromCharIndex(richTextBox1.GetFirstCharIndexFromLine(i)).Y;
                     e.Graphics.DrawString((i + 1).ToString(), richTextBox1.Font, Brushes.Blue, pictureBox1.Width - (e.Graphics.MeasureString((i + 1).ToString(), richTextBox1.Font).Width + 10), altura);
