@@ -1,0 +1,18 @@
+Package main
+  import 'fmt';
+
+  func main()  {
+  var a int = q;
+  var b float64 =w;
+  var c bool =e;
+  var d string=r;
+fmt.Println(t);
+fmt.Println("hola",y);
+a=u;
+if a_>=i {
+fmt.Println("hola");
+}
+for a=10;4>5;++a{
+fmt.Println(m);
+}
+}

@@ -1,0 +1,605 @@
+options{
+STATIC = false;
+DEBUG_LOOKAHEAD = false;
+}
+PARSER_BEGIN(LenguajeGo)
+package javacc;
+import java.io.*;
+import java.util.*;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
+public class LenguajeGo{
+
+public static String erroresS="";
+public static int nerroresS=0;
+boolean Menosshort = false; //Salida resumida falso
+String resultado = "";
+
+//#################################################################
+
+public void setTextArea(JTextArea text) 
+{
+    
+}
+//##################################################################
+
+
+public void procesar() throws Exception{
+Token t = new Token ();
+resultado="";
+
+
+do {
+t = getNextToken(); //Obtiene el proximo token
+String nomeToken = tokenImage[t.kind]; //Guardar nombre del token en String
+resultado=resultado+t.image;
+switch(t.kind){
+    case 0:
+        resultado=resultado+"\n";
+    break;
+    case 5:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 6:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 7:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 8:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 9:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 10:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 11:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 12:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 13:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 14:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 15:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 16:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 17:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 18:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 19:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 20:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 21:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 22:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 23:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 24:
+        resultado=resultado+":\t\t\t\tOperador Aritmetico\n";
+    break;
+    case 25:
+        resultado=resultado+":\t\t\t\tOperador Aritmetico\n";
+    break;
+    case 26:
+        resultado=resultado+":\t\t\t\tOperador Aritmetico\n";
+    break;
+    case 27:
+        resultado=resultado+":\t\t\t\tOperador Aritmetico\n";
+    break;
+    case 28:
+        resultado=resultado+":\t\t\t\tOperador Comparativo\n";
+    break;
+    case 29:
+        resultado=resultado+":\t\t\t\tOperador Comparativo\n";
+    break;
+    case 30:
+        resultado=resultado+":\t\t\t\tOperador Comparativo\n";
+    break;
+    case 31:
+        resultado=resultado+":\t\t\t\tOperador Comparativo\n";
+    break;
+    case 32:
+        resultado=resultado+":\t\t\t\tOperador Aritmetico\n";
+    break;
+    case 33:
+        resultado=resultado+":\t\t\t\tOperador Comparativo\n";
+    break;
+    case 34:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 35:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 36:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 37:
+        resultado=resultado+":\t\t\t\tOperador Comparativo\n";
+    break;
+    case 38:
+        resultado=resultado+":\t\t\t\tOperador Aritmetico\n";
+    break;
+    case 39:
+        resultado=resultado+":\t\t\t\tOperador Aritmetico\n";
+    break;
+    case 40:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 41:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 42:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 43:
+        resultado=resultado+":\t\t\t\tPalabra Reservada\n";
+    break;
+    case 44:
+        resultado=resultado+":\t\t\t\tTipo de Dato\n";
+    break;
+    case 45:
+        resultado=resultado+":\t\t\t\tTipo de Dato\n";
+    break;
+    case 46:
+        resultado=resultado+":\t\t\t\tTipo de Dato\n";
+    break;
+    case 47:
+        resultado=resultado+":\t\t\t\tTipo de Dato\n";
+    break;
+    case 48:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 49:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 50:
+        resultado=resultado+":\t\t\t\tComentario\n";
+    break;
+    case 51:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 52:
+        resultado=resultado+":\t\t\t\tOperador Logico\n";
+    break;
+    case 53:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 54:
+        resultado=resultado+":\t\t\t\tDelimitador\n";
+    break;
+    case 58:
+        resultado=resultado+":\t\t\t\tNumber\n";
+    break;
+    case 59:
+        resultado=resultado+":\t\t\t\tConstante\n";
+    break;
+    case 60:
+        resultado=resultado+":\t\t\t\tIdentificador\n";
+    break;
+    case 61:
+        resultado=resultado+":\t\t\tCadena\n";
+    break;
+    
+}
+} while(t.kind!=0); //Condicion de parada: Final del archivo (constante eof 0 )
+}
+
+public static void main(String args[], String x) throws ParseException, FileNotFoundException {
+try {
+}catch (Error e){
+System.out.println(e.getMessage()); //Mensaje de error lexico
+}
+}
+}
+PARSER_END(LenguajeGo)
+
+SKIP : // TOKENS IGNORADOS
+{
+ " "
+| "\r" 
+| "\t" 
+| "\n"
+}
+
+TOKEN : //PALABRAS RESERVADAS
+{
+<PR_Pkg: "Package"> 
+//{System.out.println("PR_Pkg," + image);}
+|
+<PR_Mn: "main"> 
+//{System.out.println("PR_Mn," + image);}
+|
+<PR_imp: "import">
+//{System.out.println("PR_imp," + image);}
+|
+<PR_DV: "var">
+//{System.out.println("PR_DV," + image);}
+|
+<PR_fmt: "fmt">
+//{System.out.println("PR_fmt," + image);}
+|
+<PR_Scan: "Scan">
+//{System.out.println("PR_Scan," + image);}
+|
+<PR_print: "Println">
+//{System.out.println("PR_print," + image);}
+|
+<PR_If: "if">
+//{System.out.println("PR_If," + image);}
+|
+<PR_Else: "else">
+//{System.out.println("PR_Else," + image);}
+|
+<PR_For: "for">
+//{System.out.println("PR_For," + image);}
+|
+<PR_Return: "return">
+//{System.out.println("PR_Return," + image);}
+|
+<PR_Funcion: "func">
+//{System.out.println("PR_Funcion," + image);}
+|
+<D_ParentI: "(">
+//{System.out.println("D_ParentI," + image);}
+|
+<D_ParentD: ")">
+//{System.out.println("D_ParentD," + image);}
+|
+<D_CorchI: "[">
+//{System.out.println("D_CorchI," + image);}
+|
+<D_CorchD: "]">
+//{System.out.println("D_CorchD," + image);}
+|
+<D_LlaveI: "{">
+//{System.out.println("D_LlaveI," + image);}
+|
+<D_LlaveD: "}">
+//{System.out.println("D_LlaveD," + image);}
+|
+<D_Coma: ",">
+//{System.out.println("D_Coma," + image);}
+|
+<OC_Mas: "+">
+//{System.out.println("OC_Mas," + image);}
+|
+<OC_Menos: "-">
+//{System.out.println("OC_Menos," + image);}
+|
+<OC_Por: "*">
+//{System.out.println("OC_Por," + image);}
+|
+<OC_Entre: "/">
+//{System.out.println("OC_Entre," + image);}
+|
+<OC_Menor: "<">
+//{System.out.println("OC_Menor," + image);}
+|
+<OC_Mayor: ">">
+//{System.out.println("OC_Mayor," + image);}
+|
+<OC_MenorI: "<=">
+//{System.out.println("OC_MenorI," + image);}
+|
+<OC_MayorI: ">=">
+//{System.out.println("OC_MayorI," + image);}
+|
+<OC_Asignar: "=">
+//{System.out.println("OC_Asignar," + image);}
+|
+<OC_Diferente: "!=">
+//{System.out.println("OC_Diferente," + image);}
+|
+<OC_Punto: ".">
+//{System.out.println("OC_Punto," + image);}
+|
+<OC_Comilla: "'">
+//{System.out.println("OC_Comilla," + image);}
+|
+<OC_DComilla: "\"">
+//{System.out.println("OC_Comilla," + image);}
+|
+<OC_Igual: "==">
+//{System.out.println("OC_Igual," + image);}
+|
+<OC_Increm: "++">
+//{System.out.println("OC_Increm," + image);}
+|
+<OC_Decrem: "--">
+//{System.out.println("OC_Decrem," + image);}
+|
+<OC_PuntCom: ";">
+//{System.out.println("OC_PuntCom," + image);}
+|
+<OC_Espace: "_">
+//{System.out.println("OC_Espace," + image);}
+|
+<PR_true: "true">
+//{System.out.println("PR_true," + image);}
+|
+<PR_false: "false">
+//{System.out.println("PR_false," + image);}
+|
+<T_Int: "int">
+//{System.out.println("T_Int," + image);}
+|
+<T_Float: "float64">
+//{System.out.println("T_Float," + image);}
+|
+<T_String: "string">
+//{System.out.println("T_String," + image);}
+|
+<T_Bool: "bool">
+//{System.out.println("T_Bool," + image);}
+|
+<S_admiI: "¡">
+//{System.out.println("S_admiI," + image);}
+|
+<S_admiD: "!">
+//{System.out.println("S_admiD," + image);}
+|
+<S_gato: "#">
+//{System.out.println("S_gato," + image);}
+|
+<S_pesos: "$">
+//{System.out.println("S_pesos," + image);}
+|
+<S_and: "&">
+//{System.out.println("S_and," + image);}
+|
+<S_interrogaI: "¿">
+//{System.out.println("S_interrogaI," + image);}
+|
+<S_interrogaD: "?">
+//{System.out.println("S_interrogaD," + image);}
+|
+<#LetraMin: ["a"-"z"]>
+|
+<#LetraMay: ["A"-"Z"]>
+|
+<#Numero: ["0"-"9"]>
+|
+<Number: (<Numero>)+>
+//{System.out.println("Number," + image);}
+|
+<Constante: (["+","-"])?(<Numero>)+("."(<Numero>)+)?>
+//{System.out.println("Constante," + image);}
+|
+<Variable: (<LetraMin>)+(<LetraMin>|<Numero>)*>
+//{System.out.println("Variable," + image);}
+|
+<String: <OC_DComilla>(<OC_Espace>|<Numero>|<LetraMin>|<LetraMay>|(" "))+<OC_DComilla>>
+//{System.out.println("String," + image);}
+
+}
+
+void prog():
+{}
+{
+try{ <PR_Pkg><PR_Mn>(imp())+ <PR_Funcion><PR_Mn><D_ParentI><D_ParentD><D_LlaveI>(sentencia())+<D_LlaveD>(funcion())*}
+catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind != OC_PuntCom && t!=null && t.kind != EOF);
+    }
+}
+
+void imp():
+{}
+{
+try{ <PR_imp><OC_Comilla><PR_fmt><OC_Comilla>PuntoComa() }
+catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind !=OC_PuntCom  && t!=null && t.kind != EOF);
+    }
+}
+void funcion():
+{}
+{
+try{ <PR_Funcion><Variable><D_ParentI><D_ParentD><D_LlaveI>(sentencia())+<D_LlaveD> }
+catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind != D_LlaveD && t!=null && t.kind != EOF);
+    }
+}
+
+void sentencia():
+{}
+{
+try{ ((imprimir())|(decVar())|(CicloIF())|(asignar())|(CicloFOR())) }
+catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind != OC_PuntCom && t!=null && t.kind != EOF);
+    }
+}
+
+void imprimir():
+{Token img;}
+{
+try{ <PR_fmt><OC_Punto><PR_print><D_ParentI>(img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}(<D_CorchI><Number><D_CorchD>)?|<Constante>|<String>)(<D_Coma>img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}(<D_CorchI><Number><D_CorchD>)?)*<D_ParentD>PuntoComa() }
+catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind != OC_PuntCom && t!=null && t.kind != EOF);
+    }
+}
+
+
+void decVar():
+{Token img;}
+{
+try{ 
+    <PR_DV>img=<Variable>
+ {VerificacionToken.InsertarDeclaracion(img.image,img.kind);}
+    
+    (<D_CorchI><Number><D_CorchD>(<T_Int>|<T_Float>|<T_String>|<T_Bool>)
+    |<T_Int>(<OC_Asignar>(<Number>|img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}))?
+    |<T_Float>(<OC_Asignar>(<Constante>|<Number>|img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}))?
+    |<T_String>(<OC_Asignar>(<String>|img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}))?
+    |<T_Bool>(<OC_Asignar>(<PR_true>|<PR_false>|img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}))?)PuntoComa()
+  
+}
+
+catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind != OC_PuntCom && t!=null && t.kind != EOF);
+    }
+
+}
+
+
+void asignar():
+{Token img;}
+{
+try{ img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}(<D_Coma>img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }})?(<OC_Mas>img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }})?(<D_CorchI><Number><D_CorchD>)*<OC_Asignar>(img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}(<D_Coma>img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }})?(<OC_Mas>img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }})?|<Number>|<String>|<Constante>|<PR_true>|<PR_false>)PuntoComa() }
+catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind != OC_PuntCom && t!=null && t.kind != EOF);
+    }
+}
+
+void CicloIF():
+{Token img;}
+{
+try{ <PR_If>(<Number>|img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }})<OC_Espace>(<OC_Mayor>|<OC_MayorI>|<OC_Menor>|<OC_MenorI>)(<Number>|img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }})<D_LlaveI>(sentencia())+<D_LlaveD> }
+catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind !=D_LlaveD  && t!=null && t.kind != EOF);
+    }
+}
+void CicloFOR():
+{Token img;}
+{
+try{ <PR_For>img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}<OC_Asignar><Number><OC_PuntCom>(((<Number>(<OC_Mayor>|<OC_MayorI>|<OC_Menor>|<OC_MenorI>)<Number>)<OC_PuntCom><OC_Increm>img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }})|((<Constante>(<OC_Mayor>|<OC_MayorI>|<OC_Menor>|<OC_MenorI>)<Constante>)<OC_PuntCom><OC_Increm><Constante>)|((img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}(<OC_Mayor>|<OC_MayorI>|<OC_Menor>|<OC_MenorI>)img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }})<OC_PuntCom><OC_Increm>img=<Variable>{if(!VerificacionToken.Existencia(img.image)){
+          LenguajeGo.erroresS+="La variable '"+img.image+"' no ha sido declarada\n";
+           LenguajeGo.nerroresS+=1;
+            }}))<D_LlaveI>(sentencia())+<D_LlaveD> }
+catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind != D_LlaveD && t!=null && t.kind != EOF);
+    }
+}
+void PuntoComa():
+{}
+{
+    try 
+    {
+        <OC_PuntCom> 
+    } catch (ParseException e) {
+        Token t;
+        JOptionPane.showMessageDialog(null,e.toString(),"ERROR SINTACTICO", JOptionPane.ERROR_MESSAGE);
+        //System.out.println(e.toString());
+        do {
+            t = getNextToken();
+        }while (t.kind != OC_PuntCom && t!=null && t.kind != EOF);
+    }
+}

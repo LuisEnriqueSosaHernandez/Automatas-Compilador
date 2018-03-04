@@ -1,0 +1,80 @@
+Package main
+  import 'fmt';
+
+  func main()  {
+  fmt.Println("Error1");
+  var a int = 5;
+  var a int = 5;
+  var a float64 = 2.00;
+  var b int = 6;
+  var a float64 = 2.00;
+  var c string ="Karla_diaz2";
+  fmt.Println(a,b,c);
+  fmt.Println(a);
+
+
+  fmt.Println("Error2");
+  var novia string = "KarlaDiaz2";
+  fmt.Println(novia);
+  novia = "Not_found";
+  fmt.Println(novia);
+  novia = 24;
+
+  fmt.Println("Error3");
+  var rivera string= "CRACK";
+  var h string = "ss";
+  var fff int = 2;
+  hh = "s";
+
+
+  fmt.Println("Error4");
+  
+  var pro1 int = 24;
+  var pro2 string = "hola";
+  var pro2 int = 147;
+  var pro3 float64 ;
+  var suma int =0;
+  suma = pro1 + pro2;
+  fmt.Println("La_sum_es_" , suma);
+
+
+  fmt.Println("Error5");
+  var xd1 int =  300;
+  var xd2 int = 600;
+  fmt.Println(xd1 , xd2);
+  xd1, xd2 = xd2, xd1;
+  fmt.Println(xd1 , xd2);
+  var xd3 string = "X";
+  xd1, xd3 = xd3, xd1;
+  fmt.Println(xd1 , xd2);
+
+
+  fmt.Println("Error7");
+  var arreglo [3]int;
+  fmt.Println(arreglo);
+  arreglo[0] = 96;
+  fmt.Println(arreglo[0],arreglo[0]);
+
+
+fmt.Println("Error8");
+var rd int = 4;
+var rd2 int = 8;
+var rd3 bool = true;
+if rd2_> rd {
+
+ fmt.Println("_es_mayor_que_");
+}
+
+
+fmt.Println("Error6");
+var nombre2 string="Rodrigo";
+fmt.Println("El_nombre_es_",nombre2);
+
+
+}
+ 
+func imprimir()  {
+ fmt.Println("El_nombre_es_",nombre2);
+
+}
+}

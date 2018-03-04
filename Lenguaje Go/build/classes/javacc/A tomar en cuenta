@@ -1,0 +1,12 @@
+En el fichero TokenMgrError.java, agregar las siguientes líneas antes del return en el método LexicalError:
+
+String mensaje="Lexical error at line " +
+          errorLine + ", column " +
+          errorColumn + ".  Encountered: " +
+          (EOFSeen ? "<EOF> " : ("\"" + addEscapes(String.valueOf(curChar)) + "\"") + " (" + (int)curChar + "), ") +
+          "after : \"" + addEscapes(errorAfter) + "\"";
+JOptionPane.showMessageDialog(null,mensaje,"Error Lexico", JOptionPane.ERROR_MESSAGE);
+
+En el fichero ParseException.java, agregar las siguientes líneas antes del return en el método initialise:
+
+JOptionPane.showMessageDialog(null,retval,"Error Sintactico", JOptionPane.ERROR_MESSAGE);
